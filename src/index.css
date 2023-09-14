@@ -1,13 +1,86 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+
+.adm-calender .react-calendar__navigation__label {
+    justify-content: space-between !important;
+}
+.adm-calender .react-calendar__navigation__label:hover {
+    background-color: transparent !important;
+}
+.adm-calender .react-calendar--doubleView {
+    border: none;
+    box-shadow: 0 0 5px #dddddd;
+    border-radius: 6px;
+}
+.adm-calender .react-calendar__navigation__label .react-calendar__navigation__label__labelText {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555555;
+}
+.adm-calender .react-calendar__navigation__label__divider {
+    display: none;
+}
+.adm-calender .react-calendar__navigation > button {
+    min-width: 30px;
+    background: none;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.adm-calender .react-calendar__navigation {
+    height: auto;
+    margin-bottom: 0;
+}
+.adm-calender .react-calendar__tile {
+    width: 32px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #555555;
+    padding: 0;
+    flex: initial !important;
+    border-radius: 4px;
+    margin: 2px 0;
+}
+.adm-calender .react-calendar__tile--rangeStart,
+.adm-calender .react-calendar__tile--now,
+.adm-calender .react-calendar__tile--rangeEnd {
+    background-color: #3578e5 !important;
+    color: #ffffff !important;
+}
+.adm-calender .react-calendar__tile--range {
+    background-color: #eae8e8;    color: #555555;
+}
+.adm-calender .react-calendar__month-view__weekdays {
+    border-bottom: 1px solid #eae8e8;
+    padding-bottom: 5px;
+    margin-bottom: 3px;
+}
+.adm-calender .react-calendar__month-view__weekdays__weekday {
+    text-transform: capitalize;
+    font-size: 10px;
+    font-weight: 400;
+    color: #777777;
+    width: 32px;
+    height: 16px;
+    padding: 0;
+}
+.adm-calender .react-calendar__month-view__weekdays__weekday abbr {
+    text-decoration: none;
+}
+.adm-calender .react-calendar__month-view {
+    padding: 0 15px 30px 30px;
+    margin: 0 !important;
+}
+.adm-calender .react-calendar__viewContainer .react-calendar__month-view:last-child {
+    padding: 0 30px 30px 15px;
+}
+.adm-calender .react-calendar__navigation {
+    padding: 20px 30px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+@tailwind utilities;

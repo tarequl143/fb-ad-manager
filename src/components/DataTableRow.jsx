@@ -20,7 +20,7 @@ const DataTableRow = ({ className, setChartView, selectItem, item }) => {
                     <span className="text-sm font-bold text-[#1c1e21] font-robotoSans inline-flex">
                         <label className="relative inline-flex items-center cursor-pointer">
                             <input type="checkbox" value="" className="sr-only peer" defaultChecked={!!item?.Off_On} />
-                            <div className="w-9 h-6 bg-white border border-solid border-gray-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-[14px] peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-[#000000bf] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-100 peer-checked:after:bg-blue-600"></div>
+                            <div className="w-9 h-6 bg-white border border-solid border-gray-300 rounded-full peer peer-checked:after:translate-x-[14px] peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-[#000000bf] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-100 peer-checked:after:bg-blue-600"></div>
                         </label>
                     </span>
                 </div>
@@ -47,7 +47,7 @@ const DataTableRow = ({ className, setChartView, selectItem, item }) => {
                 <span className="text-sm font-normal text-[#1c1e21] font-robotoSans leading-4 truncate">{item?.attribution_setting}</span>
             </div>
             <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[146px] max-w-[146px]">
-                <span className="text-sm font-normal text-[#0000008c] font-robotoSans truncate">{item?.results || "_"}</span>
+                <span className="text-sm font-normal text-[#0000008c] font-robotoSans truncate">{item?.results || "_"} <br /> <span className="text-[#0000008c]">{item?.messaging_type}</span></span>
             </div>
             <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[146px] max-w-[146px] justify-end">
                 <span className="text-sm font-normal text-[#0000008c] font-robotoSans text-right">{ item?.reach || "_"}</span>

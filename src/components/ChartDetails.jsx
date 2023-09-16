@@ -65,13 +65,13 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
 
     const getChartTitle = useMemo(() => {
         if(selectedChart === "perMessage") {
-            return selectedItem?.messaging_type;
+            return "Impressions";
         }
         if(selectedChart === "amount") {
             return "Amount spent";
         }
-        return "Messaging conversations started"
-    },[selectedChart]);
+        return selectedItem?.messaging_type
+    },[selectedChart, selectedItem?.messaging_type]);
 
     const getLabels = useMemo(() => {
         return selectedItem?.messages?.map((item) => `${monthNames[new Date(item?.date).getMonth()]} ${new Date(item?.date).getDate()}`);
@@ -169,9 +169,9 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                     </div>
                     <div className="inline-flex items-center justify-end">
                         <div className="flex items-center">
-                            <span className="text-sm text-[#0000008c] leading-5 border-r border-solid border-[#0000008c] pr-3">Account error</span>
+                            <span className="text-sm text-[#0000008c] leading-5 border-r border-solid border-[#0000008c] pr-3">{selectedItem?.delivery === "Active" ? <><span className="w-2 h-2 rounded-full bg-green-500 mr-1 inline-flex"></span>{selectedItem?.delivery}</> : selectedItem?.delivery}</span>
                             <label className="relative inline-flex items-center cursor-pointer ml-3">
-                                <input type="checkbox" value="" className="sr-only peer" defaultChecked={true} />
+                                <input type="checkbox" value="" className="sr-only peer" defaultChecked={selectedItem?.Off_On} />
                                 <div className="w-9 h-6 bg-white border border-solid border-gray-300 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-[14px] peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-[#000000bf] after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-100 peer-checked:after:bg-blue-600"></div>
                             </label>
                         </div>
@@ -202,7 +202,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                 <h2 className="text-[32px] font-normal text-gray-900 font-robotoSans leading-9">{selectedItem?.messaging}</h2>
                                 <div className="flex items-center font-robotoSans">
                                     <span></span>
-                                    <span>159% vs previous 10 days</span>
+                                    <span>--</span>
                                 </div>
                             </div>
                             <div className={`flex cursor-pointer flex-col flex-1 p-2 hover:shadow-md rounded-md ${selectedChart === "perMessage" ? "border border-solid border-[#32cdcd]" : ""}`} onClick={() => setSelectedChart("perMessage")}>
@@ -210,7 +210,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                 <h2 className="text-[32px] font-normal text-gray-900 font-robotoSans leading-9">{selectedItem?.per_messaging}</h2>
                                 <div className="flex items-center font-robotoSans">
                                     <span></span>
-                                    <span>159% vs previous 10 days</span>
+                                    <span>--</span>
                                 </div>
                             </div>
                             <div className={`flex cursor-pointer flex-col flex-1 p-2 hover:shadow-md rounded-md ${selectedChart === "amount" ? "border border-solid border-[#32cdcd]" : ""}`} onClick={() => setSelectedChart("amount")}>
@@ -218,7 +218,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                 <h2 className="text-[32px] font-normal text-gray-900 font-robotoSans leading-9">{selectedItem?.amount}</h2>
                                 <div className="flex items-center font-robotoSans">
                                     <span></span>
-                                    <span>159% vs previous 10 days</span>
+                                    <span>--</span>
                                 </div>
                             </div>
                         </div>

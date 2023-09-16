@@ -16,6 +16,8 @@ function App() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isViewChartDetails, setIsViewChartDetails] = useState(false);
 
+  console.log("allData", allData)
+
   const filterData = useMemo(() => {
     return searchValue ? allData.filter((item) => item?.campaign_title?.toLowerCase().includes(searchValue.toLowerCase())) : allData;
   },[allData, searchValue]);
@@ -51,7 +53,7 @@ function App() {
   useEffect(() => {
       const fetchData = async () => {
           setLoading(true);
-          await fetch(`https://facebook.edutrix.net/api/campaigns?from_date=${getDate.from_date}&to_date=${getDate.to_date}`)
+          await fetch(`https://facebook.edutrix.net/api/campaigns`)
           .then(response => response.json())
           .then(data => {
               setAllData(data?.data);

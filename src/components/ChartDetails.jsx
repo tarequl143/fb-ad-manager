@@ -35,6 +35,7 @@ const platforLabels = ["Facebook", "Instagram", "Messenger", "Audience Network",
 
 const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: {
             display: false
@@ -44,6 +45,7 @@ const options = {
 
 const BarOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: {
             display: false
@@ -223,7 +225,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                             </div>
                         </div>
                         <h3 className="text-[16px] font-bold font-robotoSans my-3">{getChartTitle}</h3>
-                        <div className="w-full">
+                        <div className="w-full h-[200px]">
                             <Line options={options} data={data} />
                         </div>
                     </div>
@@ -253,7 +255,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                         </div>
                                     </div>
                                 </div>
-                                <div className="w-full">
+                                <div className="w-full h-[260px]">
                                     <Bar options={BarOptions} data={demoGraphicData} />
                                 </div>
                             </>
@@ -277,7 +279,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="w-full">
+                                        <div className="w-full h-[350px]">
                                             <Bar options={options} data={platformData} />
                                         </div>
                                         <p className="text-[12px] font-light font-robotoSans mb-4 mt-5">* You may see low delivery of ads to the Facebook Stories placement until it's available to everyone who uses Facebook Stories. A more accurate metric is cost per result.</p>

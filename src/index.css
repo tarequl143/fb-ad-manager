@@ -9,6 +9,8 @@
 }
 .adm-calender .react-calendar--doubleView {
     border: none;
+}
+.adm-calender {
     box-shadow: 0 0 5px #dddddd;
     border-radius: 6px;
 }
@@ -47,10 +49,12 @@
     margin: 2px 0;
 }
 .adm-calender .react-calendar__tile--rangeStart,
-.adm-calender .react-calendar__tile--now,
 .adm-calender .react-calendar__tile--rangeEnd {
     background-color: #3578e5 !important;
     color: #ffffff !important;
+}
+.adm-calender .react-calendar__tile--now {
+    background-color: transparent !important;
 }
 .adm-calender .react-calendar__tile--range {
     background-color: #eae8e8;    color: #555555;

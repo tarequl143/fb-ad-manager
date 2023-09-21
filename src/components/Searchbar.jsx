@@ -3,7 +3,7 @@ import {MagnifyingGlass} from "phosphor-react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange}) => {
+const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange, setIsSubmitFilter}) => {
     const [showCalender, setShowCalender] = useState(false);
     return (
         <div className="w-full bg-transparent flex items-center justify-between mb-2 relative z-[100]">
@@ -12,12 +12,17 @@ const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange}) => {
                 <input type="search" value={searchValue || ""} onChange={(e) => updateSearch(e?.target?.value)} placeholder="Search and filter" className="h-full flex-1 !outline-none font-robotoSans text-sm font-normal" />
             </div>
             <div className="flex items-center relative">
-                <div className="z-10 ml-1 w-[292px] h-9 flex items-center justify-between bg-[#0000000d] hover:bg-gray-300 px-4 rounded-md" onClick={() => setShowCalender(!showCalender)}>
+                <div className="z-10 ml-1 w-[292px] h-9 flex items-center justify-between bg-[#0000000d] hover:bg-gray-300 px-4 rounded-md"
+                onClick={() => {
+                    updateDataRange("");
+                    setIsSubmitFilter(false);
+                    setShowCalender(!showCalender)
+                }}>
                     <span className="text-sm text-[#1c1e21] font-robotoSans flex-1">This month: Sep 1, 2023 – Sep 4, 2023</span>
                     <span className="w-4 h-4 bg-no-repeat inline-flex bg-[length:33px_398px] bg-[0px_-381px] bg-iconImg2 translate-x-1.5"></span>
                 </div>
                 {showCalender &&
-                    <div className="absolute right-0 top-full z-50 bg-white adm-calender">
+                    <div className="absolute right-0 top-full z-50 bg-white adm-calender pb-4">
                         <Calendar onChange={updateDataRange} value={dateRange}
                             showDoubleView
                             selectRange
@@ -25,6 +30,19 @@ const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange}) => {
                             allowPartialRange
                             showNeighboringMonth={false}
                         />
+                        <div className="flex items-center justify-end pr-2">
+                            <div class="pl-3 pr-4 h-9 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-md cursor-pointer mr-2"
+                            onClick={() => {
+                                updateDataRange("");
+                                setIsSubmitFilter(false);
+                                setShowCalender(false);
+                            }}>
+                                <span class="text-sm text-gray-600 font-robotoSans">Cancel</span>
+                            </div>
+                            <div class="pl-3 pr-4 h-9 flex items-center justify-center bg-blue-600 hover:bg-blue-700 rounded-md cursor-pointer mr-2" onClick={() => setIsSubmitFilter(true)}>
+                                <span class="text-sm text-white font-bold font-robotoSans">Update</span>
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

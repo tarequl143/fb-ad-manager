@@ -46,8 +46,8 @@ const DataTableRow = ({ className, setChartView, selectItem, item }) => {
             <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[120px] max-w-[120px]">
                 <span className="text-sm font-normal text-[#1c1e21] font-robotoSans leading-4 truncate">{item?.attribution_setting}</span>
             </div>
-            <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[146px] max-w-[146px]">
-                <span className="text-sm font-normal text-[#0000008c] font-robotoSans truncate">{item?.results || "_"} <br /> <span className="text-[#0000008c]">{item?.messaging_type}</span></span>
+            <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[146px] max-w-[146px] justify-end">
+                <span className="text-sm font-normal text-[#0000008c] font-robotoSans truncate text-right">{item?.results || "_"} <br /> <span className="text-[#0000008c]">{item?.messaging_type}</span></span>
             </div>
             <div className="relative py-1.5 pl-2.5 pr-1.5 h-12 border-r border-solid border-gray-300 flex items-center min-w-[146px] max-w-[146px] justify-end">
                 <span className="text-sm font-normal text-[#0000008c] font-robotoSans text-right">{ item?.reach || "_"}</span>

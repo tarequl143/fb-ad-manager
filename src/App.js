@@ -10,6 +10,7 @@ import { useState } from "react"
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [isSubmitFilter, setIsSubmitFilter] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [dateRange, setDateRange] = useState("");
   const [allData, setAllData] = useState(null);
@@ -53,7 +54,7 @@ function App() {
   useEffect(() => {
       const fetchData = async () => {
           setLoading(true);
-          await fetch(`https://facebook.edutrix.net/api/campaigns`)
+          await fetch(`https://facebook.edutrix.net/api/campaigns?from_date=${getDate.from_date}&to_date=${getDate.to_date}`)
           .then(response => response.json())
           .then(data => {
               setAllData(data?.data);
@@ -64,7 +65,7 @@ function App() {
       }
       fetchData();
 
-  },[dateRange, getDate]);
+  },[isSubmitFilter]);
 
   return (
     <div className='relative flex'>
@@ -72,7 +73,7 @@ function App() {
       <div className='relative h-screen overflow-hidden flex-1 bg-[#0000000d] pl-2 pr-[52px]'>
         <Topbar />
         <div className="relative w-full">
-          <Searchbar searchValue={searchValue} updateSearch={updateSearch} dateRange={dateRange} updateDataRange={updateDataRange} />
+          <Searchbar setIsSubmitFilter={setIsSubmitFilter} searchValue={searchValue} updateSearch={updateSearch} dateRange={dateRange} updateDataRange={updateDataRange} />
           <div className="relative">
             <TableTab />
             <TableTopbar />

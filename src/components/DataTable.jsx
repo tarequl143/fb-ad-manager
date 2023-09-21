@@ -83,7 +83,7 @@ const DataTable = ({ setChartView, allData, selectItem, loading }) => {
                     <span className="w-3 h-3 bg-no-repeat inline-flex bg-[length:25px_2799px] bg-[0px_-2695px] bg-leftBar1 absolute right-1.5 top-[17px]"></span>
                 </div>
             </div>
-            {loading ? "Loading..." : allData?.length ? allData.map((item, index) => {
+            {loading ? <div className="text-center py-4">Loading...</div> : allData?.length ? allData.map((item, index) => {
                 if(index % 2) {
                     return <DataTableRow selectItem={selectItem} setChartView={setChartView} item={item} key={index} />
                 } else {
@@ -115,7 +115,7 @@ const DataTable = ({ setChartView, allData, selectItem, loading }) => {
                     <span className="text-sm font-bold text-[#1c1e21] font-robotoSans"></span>
                 </div>
                 <div className="bg-white relative py-1.5 pl-2.5 pr-1.5 border-r border-solid border-gray-300 flex items-center justify-end min-w-[146px] max-w-[146px] h-16">
-                    <span className="text-sm font-bold text-[#1c1e21] font-robotoSans text-right">${totlaAmountSpent} <br /> <span className="text-[#0000008c]">Total spent</span></span>
+                    <span className="text-sm font-bold text-[#1c1e21] font-robotoSans text-right">${parseFloat(totlaAmountSpent).toFixed(2)} <br /> <span className="text-[#0000008c]">Total spent</span></span>
                 </div>
                 <div className="bg-white relative py-1.5 pl-2.5 pr-1.5 border-r border-solid border-gray-300 flex items-center min-w-[113px] max-w-[113px] h-16">
 

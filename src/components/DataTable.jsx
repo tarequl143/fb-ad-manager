@@ -19,7 +19,7 @@ const DataTable = ({ setChartView, allData, selectItem, loading }) => {
     },[allData]);
 
     const totlaAmountSpent = useMemo(() => {
-        const amountArray = allData?.map((item) => Number(item?.amount_spent.replaceAll('$', '')));
+        const amountArray = allData?.map((item) => Number(item?.amount_spent.replaceAll('$', '').replaceAll(',', '')));
         return amountArray?.reduce(function(accumulator, currentValue) {
             return accumulator + currentValue;
           }, 0)

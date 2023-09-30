@@ -48,7 +48,8 @@ const BarOptions = {
     maintainAspectRatio: false,
     plugins: {
         legend: {
-            display: false
+            display: true,
+            position: 'bottom',
         }
     },
 };
@@ -105,15 +106,19 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
     },[getData, getLabels]);
 
     const demoGraphicData = useMemo(() => {
+        const menPercentage = ((Number(selectedItem?.platform.total_man) / (Number(selectedItem?.platform.total_man) + Number(selectedItem?.platform.total_women))) * 100);
+        const womenPercentage = ((Number(selectedItem?.platform.total_women) / (Number(selectedItem?.platform.total_man) + Number(selectedItem?.platform.total_women))) * 100);
         return {
             labels: demoGraphicsLabels,
             datasets: [
                 {
+                    label: `Men ${menPercentage}% (${selectedItem?.platform.total_man})`,
                     data: [selectedItem?.platform?.age_13_17_man, selectedItem?.platform?.age_18_24_man, selectedItem?.platform?.age_25_34_man, selectedItem?.platform?.age_35_44_man, selectedItem?.platform?.age_45_54_man, selectedItem?.platform?.age_55_64_man, selectedItem?.platform?.age_65_man],
                     borderColor: '#5c3bbf',
                     backgroundColor: '#5c3bbf',
                 },
                 {
+                    label: `Women ${womenPercentage}% (${selectedItem?.platform.total_women})`,
                     data: [selectedItem?.platform?.age_13_17_women, selectedItem?.platform?.age_18_24_women, selectedItem?.platform?.age_25_34_women, selectedItem?.platform?.age_35_44_women, selectedItem?.platform?.age_45_54_women, selectedItem?.platform?.age_55_64_women, selectedItem?.platform?.age_65_women],
                     borderColor: '#32cdcd',
                     backgroundColor: '#32cdcd',

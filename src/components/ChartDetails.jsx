@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { DotsThree, SquaresFour } from "phosphor-react";
 import {
     Chart as ChartJS,
@@ -33,15 +33,31 @@ ChartJS.register(
 const demoGraphicsLabels = ["13-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"];
 const platforLabels = ["Facebook", "Instagram", "Messenger", "Audience Network", "Oculus"];
 
-const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-        legend: {
-            display: false
+const getSteps = (values) => {
+    let maxDataValue = Math.round(Math.max(...values));
+    let suggestedMax;
+    if (maxDataValue.toString().length == 1) {
+        suggestedMax = Math.ceil(maxDataValue / 10) * 10;
+    } else if (maxDataValue.toString().length == 2) {
+        if (maxDataValue < 21) {
+            suggestedMax = Math.ceil(maxDataValue / 10) * 10;
+        } else {
+            suggestedMax = Math.ceil(maxDataValue / 100) * 100;
         }
-    },
-};
+    } else if (maxDataValue.toString().length == 3) {
+        suggestedMax = Math.ceil(maxDataValue / 100) * 100;
+    } else if (maxDataValue.toString().length == 4) {
+        suggestedMax = Math.ceil(maxDataValue / 1000) * 1000;
+    } else if (maxDataValue.toString().length == 5) {
+        suggestedMax = Math.ceil(maxDataValue / 10000) * 10000;
+    } else {
+        suggestedMax = Math.ceil(maxDataValue / 100000) * 100000;
+    }
+
+    return suggestedMax;
+}
+
+
 
 const BarOptions = {
     responsive: true,
@@ -50,6 +66,16 @@ const BarOptions = {
         legend: {
             display: true,
             position: 'bottom',
+        }
+    },
+};
+
+const PlatformBarOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            display: false,
         }
     },
 };
@@ -65,6 +91,18 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
     const updateSelectedManuNo = (value) => {
         setSelectedMenuNo(value || 1);
     }
+
+    const getDateText = useMemo(() => {
+        let preparedDateString = '';
+
+        const mName = new Date(selectedItem?.date).toLocaleString('en-us', { month: 'short' });
+        const day = new Date(selectedItem?.date).getDate();
+        const year = new Date(selectedItem?.date).getFullYear();
+        let lastDayOfMonth = new Date(new Date(selectedItem?.date).getFullYear(), new Date(selectedItem?.date).getMonth()+1, 0);
+        preparedDateString = `${mName} 1 ${year} - ${mName} ${lastDayOfMonth.getDate()} ${year}`;
+
+        return preparedDateString || '';
+    }, [selectedItem?.date]);
 
     const getChartTitle = useMemo(() => {
         if(selectedChart === "perMessage") {
@@ -83,14 +121,49 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
     const getData = useMemo(() => {
         return selectedItem?.messages?.map((item) => {
             if(selectedChart === "perMessage") {
-                return item?.per_mess.replaceAll("$", "");
+                let singleData = item?.per_mess.replaceAll("$", "");
+                singleData = Number(singleData) === 0 ? null : Number(singleData);
+                return singleData;
             }
             if(selectedChart === "amount") {
-                return item?.amount_spent.replaceAll("$", "");
+                let singleData = item?.amount_spent.replaceAll("$", "");
+                singleData = Number(singleData) === 0 ? null : Number(singleData);
+                return singleData;
             }
-            return item?.number;
+            let singleData = Number(item?.number) === 0 ? null : Number(item?.number);
+            return singleData;
         });
     },[selectedChart, selectedItem?.messages]);
+
+    const options = useMemo(() => {
+        return {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false, // Hide vertical (column) grid lines
+                    },
+                },
+                y: {
+                    beginAtZero: false,
+                    max: getSteps(getData || []),
+                    ticks: {
+                        stepSize: Math.floor(getSteps(getData || []) / 4), // Set the step size to 10
+                        min: 0, // Set the minimum value
+                    },
+                    grid: {
+                        drawBorder: false,
+                    },
+                },
+            },
+        };
+    },[getData]);
 
     const data = useMemo(() => {
         return {
@@ -100,6 +173,8 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                 data: getData,
                 borderColor: '#32cdcd',
                 backgroundColor: '#027a7a',
+                pointRadius: 0,
+                borderWidth: 2,
                 },
             ],
         }
@@ -112,13 +187,13 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
             labels: demoGraphicsLabels,
             datasets: [
                 {
-                    label: `Men ${menPercentage}% (${selectedItem?.platform.total_man})`,
+                    label: `Men ${menPercentage.toFixed(2)}% (${selectedItem?.platform.total_man})`,
                     data: [selectedItem?.platform?.age_13_17_man, selectedItem?.platform?.age_18_24_man, selectedItem?.platform?.age_25_34_man, selectedItem?.platform?.age_35_44_man, selectedItem?.platform?.age_45_54_man, selectedItem?.platform?.age_55_64_man, selectedItem?.platform?.age_65_man],
                     borderColor: '#5c3bbf',
                     backgroundColor: '#5c3bbf',
                 },
                 {
-                    label: `Women ${womenPercentage}% (${selectedItem?.platform.total_women})`,
+                    label: `Women ${womenPercentage.toFixed(2)}% (${selectedItem?.platform.total_women})`,
                     data: [selectedItem?.platform?.age_13_17_women, selectedItem?.platform?.age_18_24_women, selectedItem?.platform?.age_25_34_women, selectedItem?.platform?.age_35_44_women, selectedItem?.platform?.age_45_54_women, selectedItem?.platform?.age_55_64_women, selectedItem?.platform?.age_65_women],
                     borderColor: '#32cdcd',
                     backgroundColor: '#32cdcd',
@@ -189,7 +264,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                 </div>
                 <div className="w-full h-[52px] flex items-center justify-end bg-white px-3 border-b border-solid border-[#e9eaeb]">
                     <div className="ml-1 w-[292px] h-9 flex items-center justify-between bg-[#0000000d] hover:bg-gray-300 px-4 rounded-md">
-                        <span className="text-sm text-[#1c1e21] font-robotoSans flex-1">This month: Sep 1, 2023 – Sep 4, 2023</span>
+                        <span className="text-sm text-[#1c1e21] font-robotoSans flex-1">{getDateText}</span>
                         <span className="w-4 h-4 bg-no-repeat inline-flex bg-[length:33px_398px] bg-[0px_-381px] bg-iconImg2 translate-x-1.5"></span>
                     </div>
                 </div>
@@ -285,7 +360,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
                                             </div>
                                         </div>
                                         <div className="w-full h-[350px]">
-                                            <Bar options={options} data={platformData} />
+                                            <Bar options={PlatformBarOptions} data={platformData} />
                                         </div>
                                         <p className="text-[12px] font-light font-robotoSans mb-4 mt-5">* You may see low delivery of ads to the Facebook Stories placement until it's available to everyone who uses Facebook Stories. A more accurate metric is cost per result.</p>
                                     </div>

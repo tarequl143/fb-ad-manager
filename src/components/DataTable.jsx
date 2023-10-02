@@ -5,7 +5,6 @@ const DataTable = ({ setChartView, allData, selectItem, loading }) => {
 
     const totlaReach = useMemo(() => {
         const reachArray = allData?.map((item) => Number(item?.reach.replaceAll(',', '')));
-        console.log("reachArray", reachArray);
         return reachArray?.reduce(function(accumulator, currentValue) {
             return accumulator + currentValue;
           }, 0)

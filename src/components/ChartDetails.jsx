@@ -114,9 +114,18 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
         return selectedItem?.messaging_type
     },[selectedChart, selectedItem?.messaging_type]);
 
+    console.log("selectedItem", selectedItem);
+
     const getLabels = useMemo(() => {
-        return selectedItem?.messages?.map((item) => `${monthNames[new Date(item?.date).getMonth()]} ${new Date(item?.date).getDate()}`);
+        return selectedItem?.messages?.map((item) => {
+            if(!item?.date) {
+                return ''
+            }
+            return `${monthNames[new Date(item?.date).getMonth()]} ${new Date(item?.date).getDate()}`
+        });
     },[selectedItem?.messages]);
+
+    console.log("getLabels", getLabels);
 
     const getData = useMemo(() => {
         return selectedItem?.messages?.map((item) => {

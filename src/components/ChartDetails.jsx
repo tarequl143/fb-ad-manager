@@ -119,7 +119,7 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
             if(!item?.date) {
                 return ''
             }
-            return `${monthNames[new Date(item?.date).getMonth()]} ${new Date(item?.date).getDate()}`
+            return `${new Date(item?.date).getDate()} ${monthNames[new Date(item?.date).getMonth()]}`
         });
     },[selectedItem?.messages]);
 

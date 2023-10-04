@@ -22,9 +22,6 @@ function App() {
   },[allData, searchValue]);
 
   const updateDataRange = (newValue) => {
-    if(isSubmitFilter) {
-      setIsSubmitFilter(false);
-    }
     setDateRange(newValue);
   }
 

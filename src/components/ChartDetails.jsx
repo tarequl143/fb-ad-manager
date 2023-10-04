@@ -15,7 +15,7 @@ import { Line, Bar } from 'react-chartjs-2';
 import ChartLeftbar from "./ChartLeftbar"
 import ChartSidebar from "./ChartSidebar"
 
-const domainUrl = "https://facebook.edutrix.net/"
+const domainUrl = "https://admin-ad.adtheta.com/"
 
 const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -114,8 +114,6 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
         return selectedItem?.messaging_type
     },[selectedChart, selectedItem?.messaging_type]);
 
-    console.log("selectedItem", selectedItem);
-
     const getLabels = useMemo(() => {
         return selectedItem?.messages?.map((item) => {
             if(!item?.date) {
@@ -124,8 +122,6 @@ const ChartDetails = ({setChartView, isViewChartDetails, removeSelectedItem, sel
             return `${monthNames[new Date(item?.date).getMonth()]} ${new Date(item?.date).getDate()}`
         });
     },[selectedItem?.messages]);
-
-    console.log("getLabels", getLabels);
 
     const getData = useMemo(() => {
         return selectedItem?.messages?.map((item) => {

@@ -4,6 +4,9 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange, setIsSubmitFilter}) => {
+
+    const [showCalender, setShowCalender] = useState(false);
+
     const getDateText = useMemo(() => {
         let preparedDateString = '';
         if(!dateRange) {
@@ -28,7 +31,7 @@ const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange, setIs
         return preparedDateString;
     }, [dateRange]);
 
-    const [showCalender, setShowCalender] = useState(false);
+
     return (
         <div className="w-full bg-transparent flex items-center justify-between mb-2 relative z-[100]">
             <div className="flex items-center flex-1 bg-white relative pl-11 pr-3 shadow-[0_0_5px_0_rgba(0,0,0,0.1)] h-9 rounded-lg">
@@ -38,8 +41,6 @@ const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange, setIs
             <div className="flex items-center relative">
                 <div className="z-10 ml-1 w-[292px] h-9 flex items-center justify-between bg-[#0000000d] hover:bg-gray-300 px-4 rounded-md"
                 onClick={() => {
-                    updateDataRange("");
-                    setIsSubmitFilter(false);
                     setShowCalender(!showCalender)
                 }}>
                     <span className="text-sm text-[#1c1e21] font-robotoSans flex-1">{getDateText}</span>
@@ -57,13 +58,16 @@ const Searchbar = ({updateSearch, searchValue, updateDataRange, dateRange, setIs
                         <div className="flex items-center justify-end pr-2">
                             <div className="pl-3 pr-4 h-9 flex items-center justify-center bg-gray-200 hover:bg-gray-300 rounded-md cursor-pointer mr-2"
                             onClick={() => {
-                                updateDataRange("");
                                 setIsSubmitFilter(false);
                                 setShowCalender(false);
                             }}>
                                 <span className="text-sm text-gray-600 font-robotoSans">Cancel</span>
                             </div>
-                            <div className="pl-3 pr-4 h-9 flex items-center justify-center bg-blue-600 hover:bg-blue-700 rounded-md cursor-pointer mr-2" onClick={() => setIsSubmitFilter(true)}>
+                            <div className="pl-3 pr-4 h-9 flex items-center justify-center bg-blue-600 hover:bg-blue-700 rounded-md cursor-pointer mr-2"
+                                onClick={() => {
+                                    setIsSubmitFilter(prev => !prev);
+                                    setShowCalender(false);
+                                }}>
                                 <span className="text-sm text-white font-bold font-robotoSans">Update</span>
                             </div>
                         </div>
